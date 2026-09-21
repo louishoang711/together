@@ -471,8 +471,7 @@ export default function App() {
             />
           ))}
 
-          <div className="screen-header with-back">
-            <button className="btn-back" type="button" onClick={goHome} aria-label={eventConfig.copy.backHome}>←</button>
+          <div className="screen-header" style={{ marginBottom: 10 }}>
             <div className="pt-header-combo">
               <BrandLogo size="md" />
               <div className="pt-header-title">{eventConfig.brand.eventName}</div>
@@ -533,10 +532,6 @@ export default function App() {
               }}
             />
           ))}
-
-          <div className="screen-header with-back">
-            <button className="btn-back" type="button" onClick={goBackToBooth} aria-label={eventConfig.copy.backHome}>←</button>
-          </div>
 
           {/* STEP 5 (B5): REVEALED REWARD */}
           {isRewarded ? (
