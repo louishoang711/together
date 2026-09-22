@@ -438,7 +438,7 @@ export default function App() {
                 </div>
               </div>
 
-              <button type="submit" className="primary-btn pill" style={{ marginTop: 18 }}>
+              <button type="submit" className="primary-btn pill form-btn-submit">
                 {eventConfig.copy.btnContinue}
               </button>
             </form>
@@ -466,7 +466,7 @@ export default function App() {
             />
           ))}
 
-          <div style={{ marginTop: 'auto', marginBottom: 'auto', width: '100%' }}>
+          <div className="screen-content-center">
             <p className="section-kicker">{eventConfig.copy.boothKicker}</p>
             <div
               className={`stamp-card-zone${isStamping ? ' is-stamping' : ''}`}
@@ -521,7 +521,7 @@ export default function App() {
 
           {/* STEP 5 (B5): REVEALED REWARD */}
           {isRewarded ? (
-            <div style={{ marginTop: 'auto', marginBottom: 'auto', width: '100%' }}>
+            <div className="screen-content-center">
               <div className="reward-revealed">
                 <div className="reward-pill-header">{eventConfig.copy.yourReward}</div>
                 <h2 className="revealed-name-top">{reward.name}</h2>
@@ -535,7 +535,7 @@ export default function App() {
             </div>
           ) : (
             /* STEP 4 (B4): UNREVEALED SCRATCH CARD */
-            <div style={{ marginTop: 'auto', marginBottom: 'auto', width: '100%' }}>
+            <div className="screen-content-center">
               <div className="reward-pill-header">{eventConfig.copy.openReward}</div>
               <div className="scratch-center">
                 <ScratchCard key={reward.id} reward={reward} onComplete={() => setIsRewarded(true)} />
