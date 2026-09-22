@@ -25,10 +25,6 @@ function PortraitArtwork({ src, label }: { src: string; label: string }) {
   )
 }
 
-function BrandLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
-  return <img src={eventConfig.brand.logo} className={`brand-logo brand-logo--${size}`} alt={eventConfig.brand.name} />
-}
-
 interface Flake {
   x: number
   y: number
@@ -103,6 +99,8 @@ function ScratchCard({ reward, onComplete }: { reward: Reward; onComplete: () =>
     ctx.strokeStyle = 'rgba(255,255,255,.5)'
     ctx.strokeRect(14, 14, 332, 452)
     ctx.globalCompositeOperation = 'destination-out'
+
+    if (!eventConfig.brand.scratchLogo) return
 
     const logo = new Image()
     logo.src = eventConfig.brand.scratchLogo
@@ -372,12 +370,6 @@ export default function App() {
             />
           ))}
 
-          {/* Top Header matching B2 mockup */}
-          <div className="pt-header-combo" style={{ marginBottom: 20 }}>
-            <BrandLogo size="lg" />
-            <div className="pt-header-title">{eventConfig.brand.eventName}</div>
-          </div>
-
           <div className="passport-form-card">
             <p className="form-eyebrow">{eventConfig.copy.welcome}</p>
             <h1 className="form-title">
@@ -387,7 +379,7 @@ export default function App() {
 
             <form onSubmit={handleStartBooth}>
               <div className="form-field-group">
-                <label className="form-label">{eventConfig.copy.nameLabel}</label>
+                <label className="form-label">Họ và tên</label>
                 <input
                   type="text"
                   className="form-input"
@@ -398,7 +390,7 @@ export default function App() {
               </div>
 
               <div className="form-field-group">
-                <label className="form-label">{eventConfig.copy.phoneLabel}</label>
+                <label className="form-label">SĐT:</label>
                 <input
                   type="tel"
                   className="form-input"
@@ -420,11 +412,13 @@ export default function App() {
               </div>
 
               <div className="form-field-group" style={{ marginTop: 10 }}>
+                <span className="form-label">Bạn có tham gia Game PlayTogether</span>
                 <div className="radio-group">
                   <div
                     className={`radio-option ${hasAccount === true ? 'active' : ''}`}
                     onClick={() => { playSound.click(); setHasAccount(true) }}
                   >
+                    <input className="radio-input" type="radio" name="has-account" checked={hasAccount === true} readOnly />
                     <div className="custom-checkbox-box">
                       {hasAccount === true && '✓'}
                     </div>
@@ -435,6 +429,7 @@ export default function App() {
                     className={`radio-option ${hasAccount === false ? 'active' : ''}`}
                     onClick={() => { playSound.click(); setHasAccount(false) }}
                   >
+                    <input className="radio-input" type="radio" name="has-account" checked={hasAccount === false} readOnly />
                     <div className="custom-checkbox-box">
                       {hasAccount === false && '✓'}
                     </div>
@@ -444,7 +439,7 @@ export default function App() {
               </div>
 
               <button type="submit" className="primary-btn pill" style={{ marginTop: 18 }}>
-                {eventConfig.copy.btnContinue} <span>→</span>
+                {eventConfig.copy.btnContinue}
               </button>
             </form>
           </div>
@@ -471,13 +466,6 @@ export default function App() {
             />
           ))}
 
-          <div className="screen-header" style={{ marginBottom: 10 }}>
-            <div className="pt-header-combo">
-              <BrandLogo size="md" />
-              <div className="pt-header-title">{eventConfig.brand.eventName}</div>
-            </div>
-          </div>
-
           <div style={{ marginTop: 'auto', marginBottom: 'auto', width: '100%' }}>
             <p className="section-kicker">{eventConfig.copy.boothKicker}</p>
             <div
@@ -500,9 +488,7 @@ export default function App() {
                   <div className="seal-drop">
                     <div className="seal-rect">
                       <span>{eventConfig.copy.stampEventLine}</span>
-                      <img src={eventConfig.brand.logo} className="seal-logo" alt="" />
                       <strong>{eventConfig.copy.stampValidated}</strong>
-                      <span className="seal-bottom">{eventConfig.brand.eventName}</span>
                     </div>
                     <div className="seal-pulse" />
                   </div>
@@ -516,7 +502,7 @@ export default function App() {
       {/* ────────────────── STEP 4 & 5 (B4 & B5): REWARD & SCRATCH ────────────────── */}
       {screen === 'reward' && reward && (
         <section
-          className="screen reward-screen"
+          className={`screen reward-screen ${isRewarded ? 'reward-screen--revealed' : 'reward-screen--scratch'}`}
           style={{ backgroundImage: `url(${eventConfig.brand.background})` }}
         >
           {petals.map(p => (
@@ -543,7 +529,7 @@ export default function App() {
                   <PortraitArtwork src={reward.image} label={reward.name} />
                 </div>
                 <button className="primary-btn pill home-btn-big" type="button" onClick={goHome}>
-                  {eventConfig.copy.backHome} <span>→</span>
+                  {eventConfig.copy.backHome}
                 </button>
               </div>
             </div>
