@@ -277,7 +277,8 @@ function ScratchCard({ reward, onComplete }: { reward: Reward; onComplete: () =>
 }
 
 export default function App() {
-  if (window.location.pathname === '/admin') return <AdminDashboard />
+  const currentPath = window.location.pathname.replace(/\/+$/, '') || '/'
+  if (currentPath === '/admin') return <AdminDashboard />
 
   const [screen, setScreen] = useState<Screen>('form')
   const [reward, setReward] = useState<Reward | null>(null)
