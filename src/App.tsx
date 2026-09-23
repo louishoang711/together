@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { eventConfig, pickWeightedReward, type Reward } from './eventConfig'
 import { playSound } from './audio'
+import AdminDashboard from './AdminDashboard'
 
 type Screen = 'form' | 'booth' | 'reward'
 
@@ -276,6 +277,8 @@ function ScratchCard({ reward, onComplete }: { reward: Reward; onComplete: () =>
 }
 
 export default function App() {
+  if (window.location.pathname === '/admin') return <AdminDashboard />
+
   const [screen, setScreen] = useState<Screen>('form')
   const [reward, setReward] = useState<Reward | null>(null)
   const [isStamping, setIsStamping] = useState(false)
